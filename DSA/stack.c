@@ -57,33 +57,32 @@ int stack_get(MyStack *stack)
     if (stack_is_empty(stack))return -1;
     return stack->data[stack->top];
 }
-
 //test_stack
-/****************************************************************
-int main(int argc,char **argv)
-{
-    MyStack *stack=stack_create(10);
-    if (stack==NULL)
-    {
-        printf("stack init failed\n");
-    }
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,99);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,33);
-    stack_push(stack,888);
-    stack_init(stack);
-    int temp=stack_pop(stack);
-    printf("stack %d",temp);
-    free(stack);
-    return 0;
-}
-****************************************************************/
+
+// int main(int argc,char **argv)
+// {
+//     MyStack *stack=stack_create(10);
+//     if (stack==NULL)
+//     {
+//         printf("stack init failed\n");
+//     }
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,99);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,33);
+//     stack_push(stack,888);
+//     stack_init(stack);
+//     int temp=stack_pop(stack);
+//     printf("stack %d",temp);
+//     free(stack);
+//     return 0;
+// }
+

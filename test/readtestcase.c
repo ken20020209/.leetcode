@@ -118,12 +118,11 @@ char **readtestcase()
     fclose(fp);
     return str;
 }
-/*
-int main()
-{
 
-    char **str=readtestcase();
+// int main()
+// {
+
+//     char **str=readtestcase();
     
-    return 0;
-}
-*/
+//     return 0;
+// }
