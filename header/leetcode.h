@@ -13,6 +13,6 @@
 #include <stdio.h>
 #include <math.h>
 
-#include "readtestcase.h"
-#include "stack.h"
-#include "dequeue.h"
+//#include "readtestcase.h"
+//#include "stack.h"
+//#include "dequeue.h"
