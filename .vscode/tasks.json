@@ -1,0 +1,60 @@
+{
+    "windows": {
+        "options": {
+          "shell": {
+            "executable": "cmd.exe",
+            "args": [
+              "/C",
+              // The path to VsDevCmd.bat depends on the version of Visual Studio you have installed.
+              "\"C:/Program Files/Microsoft Visual Studio/2022/Community/Common7/Tools/VsDevCmd.bat\"",
+              "&&"
+            ]
+          }
+        }
+      },
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "C/C++: cl.exe 生成活动文件",
+            "command": "cl.exe",
+            "args": [
+                "/Zi",
+                "/EHsc",
+                "/nologo",
+                "/Fe:",
+                //修改了下面一行，把生成的可执行文件全部放到Bin目录下
+                "${fileDirname}\\Bin\\${fileBasenameNoExtension}.exe",
+                "C:\\Users\\Ken\\.leetcode\\test\\readtestcase.c",
+                "${file}"
+                
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$msCompile"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "调试器生成的任务。"
+        },
+        //自己定义的任务
+        {
+        	//label随便取，和后面launch对应就好
+            "label": "remove obj",
+            "type": "shell",
+            //自己写的脚本路径
+            "command": "C:\\Users\\Ken\\.leetcode\\.vscode\\remove.bat",
+            //这个目录设置要有
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            //本任务依赖于上面的编译任务，所以launch调用的时候直接调用本任务就可以，然后会自动执行依赖任务
+            "dependsOn": ["C/C++: cl.exe 生成活动文件"]
+        }
+    ],
+    "version": "2.0.0"
+
+}
