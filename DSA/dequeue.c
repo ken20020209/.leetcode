@@ -89,7 +89,7 @@ int dequeue_get_front(MyDequeue *dequeue)
     return dequeue->data[dequeue->front];
 }
 
-//test
+//1test
 int main()
 {
      MyDequeue *dequeue =  dequeue_create(10);
