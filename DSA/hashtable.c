@@ -115,6 +115,7 @@ int HashTableInsert(HashTable *table, int key, int value)
 int HashTableSerch(HashTable *table, int key, int value)
 {
     int address = key % table->capacity;
+    if(table->head[address]==NULL)return 0;
     if (table->head[address]->length == 0)
         return 0;
     HashNode *node = table->head[address]->node;
