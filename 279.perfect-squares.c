@@ -6,11 +6,11 @@
 #include "header\leetcode.h"
 
 // @lc code=start
-
+//dp
 int numSquares(int n)
 {
     int *dp = (int *)malloc((n + 1) * sizeof(int));
-    memset(dp, INT_MAX >> 1, (n + 1) * sizeof(int));
+    for(int i=1;i<=n;i++)dp[i]=INT_MAX;
     dp[0]=0;
     for(int i = 1; i <= n; i++)
     {
@@ -19,12 +19,13 @@ int numSquares(int n)
             dp[i]=fmin(dp[i],dp[i-j*j]+1);
         }
     }
+
     return dp[n];
 }
 // @lc code=end
 int main()
 {
     int res=numSquares(12);
-    
+
     return 0;
 }

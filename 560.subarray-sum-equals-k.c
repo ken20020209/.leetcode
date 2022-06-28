@@ -1,6 +1,16 @@
-#include "../header/leetcode.h"
+/*
+ * @lc app=leetcode id=560 lang=c
+ *
+ * [560] Subarray Sum Equals K
+ */
+#include "header\leetcode.h"
 
-#define abs(a) (((a) >= 0) ? (a) : (-a))
+// @lc code=start
+int abs(int a)
+{
+    return a < 0 ? -a : a;
+}
+
 typedef struct HashNode
 {
     int val;
@@ -102,8 +112,8 @@ int HashTableInsert(HashTable *table, int key, int value)
     {
         table->head[address]->length = 1;
         table->head[address]->node = HashNodeCreate();
-        table->head[address]->node->val = value;
         table->head[address]->node->key = key;
+        table->head[address]->node->val = value;
         table->size++;
     }
     else
@@ -137,100 +147,26 @@ HashNode *HashTableSerch(HashTable *table, int key)
     }
     return 0;
 }
-// return deleted elements
-int HashTableRM(HashTable *table, int key)
+int subarraySum(int *nums, int numsSize, int k)
 {
-    int address = key % table->capacity;
-    address = abs(address);
-    int len = table->head[address]->length;
-    int ret = 0;
-    if (len == 0)
-        return 0;
-    HashNode *node = table->head[address]->node;
-    HashNode *temp;
-    while (node != NULL)
+    int res = 0;
+    HashTable *table = HashTableCreate(10000);
+    for (int i = 1; i < numsSize; i++)
+        nums[i] += nums[i - 1];
+    for (int i = 0; i < numsSize; i++)
     {
-        if (node->key == key)
+        if (nums[i] == k)
+            res++;
+        HashNode *node = HashTableSerch(table, nums[i]);
+        if (node != NULL)
         {
-            if (node->pre == NULL)
-            {
-                table->head[address]->node = node->next;
-                table->head[address]->node->pre = NULL;
-                table->head[address]->length--;
-                temp = node->next;
-                HashNodeFree(node);
-                node = temp;
-                ret++;
-            }
-            else
-            {
-                node->pre->next = node->next;
-                table->head[address]->length--;
-                temp = node->next;
-                HashNodeFree(node);
-                node = temp;
-                ret++;
-            }
+            
+            res += node->val;
         }
-        else
-        {
-            node = node->next;
-        }
+        node = HashTableSerch(table, k + nums[i]);
+        HashTableInsert(table, k + nums[i], node == NULL ? 1 : node->val + 1);
     }
-    return ret;
+    // HashTableFree(table);
+    return res;
 }
-// return get data size;
-// 0 no data
-//-1 cant save every data
-int HashTableDataGet(HashTable *table, int key, int *arr, int size)
-{
-    int address = key % table->capacity;
-    address = abs(address);
-    if (table->head[address] == NULL)
-        return 0;
-    int len = table->head[address]->length;
-    HashNode *node = table->head[address]->node;
-    if (len == 0)
-        return 0;
-    if (len > size)
-        return -1;
-    for (int i = 0; i < len; i++)
-    {
-        arr[i] = node->val;
-        node = node->next;
-    }
-    return len;
-}
-int HashTablePrintf(HashTable *table, int key)
-{
-    int address = key % table->capacity;
-    address = abs(address);
-    printf("key:%d\n", key);
-    if (table->head[address] == NULL || table->head[address]->length == 0)
-    {
-        printf("There is no data\n");
-        return 0;
-    }
-    HashNode *node = table->head[address]->node;
-    for (int i = 0; i < table->head[address]->length; i++)
-    {
-        printf("LinkList%d:%d\n", i + 1, node->val);
-        node = node->next;
-    }
-    return 1;
-}
-int main()
-{
-    HashTable *ht = HashTableCreate(1000);
-    HashTableInsert(ht, 20, 100);
-    HashTableInsert(ht, 20, 1000);
-    HashTableInsert(ht, 20, 1000);
-    HashTableInsert(ht, 20, 1000);
-    HashTableInsert(ht, 20, 1000);
-    HashTableInsert(ht, 20, 1000);
-    HashTableInsert(ht, 20, 1000);
-    int arr[100] = {0};
-    int size = HashTableDataGet(ht, 20, arr, 100);
-    HashTableFree(ht);
-    return 0;
-}
+// @lc code=end
