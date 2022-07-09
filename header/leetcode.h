@@ -16,3 +16,10 @@
 //#include "readtestcase.h"
 //#include "stack.h"
 //#include "dequeue.h"
+
+struct TreeNode
+{
+    int val;
+    struct TreeNode *left;
+    struct TreeNode *right;
+};
