@@ -2,7 +2,7 @@
     #define MAX(a,b) (((a)>(b))?(a):(b))
     #define MIN(a,b) (((a)<(b))?(a):(b))
 */
-//#define abs(a) (((a)>=0)?(a):(-a))
+//#define abs(a) (((a)<0)?-(a):(a))
 #define true 1
 #define false 0
 #define bool int
