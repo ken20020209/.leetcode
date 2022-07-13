@@ -1,6 +1,6 @@
 #include "../header/leetcode.h"
 
-#define abs(a) (((a) >= 0) ? (a) : (-a))
+#define abs(a) (((a) >= 0) ? (a) : -(a))
 typedef struct HashNode
 {
     int val;
