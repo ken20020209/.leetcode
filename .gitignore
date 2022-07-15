@@ -1,2 +1,5 @@
 /Bin
 /*/Bin
+*.exe
+*.pdb
+*.obj
