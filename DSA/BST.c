@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 typedef (*BST_compare_fn)(void *key1, void *key2);
 typedef struct BSTNode
 {
