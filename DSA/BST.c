@@ -84,7 +84,7 @@ void BST_Insert(BST *tree, BSTNode *node)
     else
         pretreeNode->left = node;
 }
-BSTNode *BSTmax(BST *tree,BSTNode *node)
+BSTNode *BSTmax(BSTNode *node)
 {
     while (node->right != NULL)
     {
@@ -92,7 +92,7 @@ BSTNode *BSTmax(BST *tree,BSTNode *node)
     }
     return node;
 }
-BSTNode *BSTmin(BST *tree, BSTNode *node)
+BSTNode *BSTmin(BSTNode *node)
 {
     while (node->left != NULL)
     {
@@ -122,7 +122,7 @@ BSTNode *BST_delete(BST *tree, void *key)
         BSTNode_transplant(tree, node, node->left);
     else
     {
-        BSTNode *min = BSTmin(tree);
+        BSTNode *min = BSTmin(node->right);
         if (min->parent != node)
         {
             BSTNode_transplant(tree, min, min->right);
@@ -137,6 +137,14 @@ BSTNode *BST_delete(BST *tree, void *key)
     node->right = NULL;
     node->left = NULL;
     return node;
+}
+void BST_Inorder(BSTNode *root)
+{
+    if (root == NULL)
+        return;
+    BST_Inorder(root->left);
+    printf(" %ld ", (long)root->key);
+    BST_Inorder(root->right);
 }
 void BST_Print_2d(BSTNode *node, int space)
 {
@@ -161,15 +169,8 @@ int cmp(void *a, void *b)
 int main()
 {
     BST *tree = BST_New(cmp);
-    BST_Insert(tree, BSTNode_New(9, 2));
-    BST_Insert(tree, BSTNode_New(15, 3));
-    BST_Insert(tree, BSTNode_New(16, 3));
-    BST_Insert(tree, BSTNode_New(18, 3));
-    BST_Insert(tree, BSTNode_New(19, 3));
-    BST_Insert(tree, BSTNode_New(11, 3));
-    BST_Insert(tree, BSTNode_New(1, 3));
-    BST_Insert(tree, BSTNode_New(6, 3));
-    BST_delete(tree, 15);
-    BST_Print(tree);
+
+    // BST_Print(tree);
+    BST_Inorder(tree->root);
     return 0;
 }
