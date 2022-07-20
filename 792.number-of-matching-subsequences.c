@@ -1,5 +1,11 @@
-#include "../header/leetcode.h"
+/*
+ * @lc app=leetcode id=792 lang=c
+ *
+ * [792] Number of Matching Subsequences
+ */
+#include "header\leetcode.h"
 
+// @lc code=start
 typedef (*KeyCompare)(const void *, const void *);
 typedef (*hashCode)(const void *);
 typedef struct HashNode
@@ -69,7 +75,7 @@ void *HashTableInsert(HashTable *table, void *key, void *val)
     table->buckets[address]->head = node;
     return NULL;
 }
-HashNode *HashTableFind(HashTable *table, void *key)
+void *HashTableFind(HashTable *table, void *key)
 {
     int address = HashTableAddress(table, key);
     HashNode *node = table->buckets[address]->head;
@@ -78,45 +84,66 @@ HashNode *HashTableFind(HashTable *table, void *key)
         int cmp = table->key_eq(node->key, key);
         if (cmp == 0)
         {
-            return node;
+            return node->val;
         }
         node = node->next;
     }
     return NULL;
 }
-// call back function
+bool isSubsequence(char *s, char *t)
+{
+    if (*s == '\0')
+        return true;
+
+    while (*t != '\0')
+    {
+
+        if (*s == *t)
+        {
+            s++;
+        }
+        if (*s == '\0')
+        {
+            return true;
+        }
+        t++;
+    }
+    return false;
+}
 int BKDhash(char *key)
 {
     int hashCode = 0;
     while (*key++)
-        hashCode = hashCode * 31 + *key;
+        hashCode = (hashCode * 31 + *key) & 0x00ffffff;
     return hashCode;
 }
 int keystrcmp(void *a, void *b)
 {
     return strcmp((char *)a, (char *)b);
 }
-int inthash(void *key)
+int numMatchingSubseq(char *s, char **words, int wordsSize)
 {
-    return (int)key;
-}
-int key_cmp(void *a, void *b)
-{
-    return (int)a - (int)b;
-}
-int main()
-{
-    // HashTable *table = HashTableCreate(100, (KeyCompare)key_cmp, (hashCode)inthash);
-    HashTable *table = HashTableCreate(100, (KeyCompare)keystrcmp, (hashCode)BKDhash);
-    char buf[100];
-    for (int i = 0; i < 1001; i++)
+    int res = 0;
+    HashTable *table = HashTableCreate(1000, keystrcmp, BKDhash);
+    HashNode *node = NULL;
+    for (int i = 0; i < wordsSize; i++)
     {
-        sprintf(buf, "%d\0", i);
-        char *key = (char *)malloc((strlen(buf) + 1) * sizeof(char));
-        strcpy(key, buf);
-        HashTableInsert(table, key, (void *)i);
+        // printf("%d\n", i);
+        node = HashTableFind(table, words[i]);
+        // printf("    node = %p\n", node);
+        if (node == NULL)
+        {
+            if (isSubsequence(words[i], s))
+            {
+                HashTableInsert(table, words[i], 1);
+                res++;
+            }
+            else
+                HashTableInsert(table, words[i], 2);
+        }
+        else if (node == 1)
+            res++;
     }
-    HashTableInsert(table, "absd", (void *)999);
-    printf("val:%d\n", (int)HashTableFind(table, "absd"));
-    return 0;
+    return res;
 }
+// @lc code=end
